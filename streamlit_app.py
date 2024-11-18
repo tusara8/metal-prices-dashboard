@@ -5,6 +5,8 @@ from pathlib import Path
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from google.oauth2 import service_account
+import json
 
 st.set_page_config(
     page_title='Metal prices dashboard',
@@ -12,11 +14,9 @@ st.set_page_config(
 )
 
 # Firestore
-cred = credentials.Certificate('./auth/test_data.json')
-
-firebase_admin.initialize_app(cred)
-
-db = firestore.client()
+key_dict = json.loads(st.secrets["textkey"])
+creds = service_account.Credentials.from_service_account_info(key_dict)
+db = firestore.Client(credentials=creds, project="streamlit-reddit")
 
 collection = db.collection('metals')
 docs = collection.stream()
