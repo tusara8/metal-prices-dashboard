@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # Firestore
-cred = credentials.Certificate('./auth/firebase_credentials.json')
+cred = credentials.Certificate('./auth/test_data.json')
 
 firebase_admin.initialize_app(cred)
 
